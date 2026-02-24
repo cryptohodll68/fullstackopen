@@ -1,8 +1,8 @@
-
-import './App.css'
+import Course from './Course.jsx'
 
 const App = () => {
-  const course = {
+  const courses = [
+    {
     id: 1,
     name: 'Half Stack application development',
     parts: [
@@ -20,11 +20,38 @@ const App = () => {
         name: 'State of a component',
         exercises: 14,
         id: 3
+      },
+      {
+        name: 'Redux',
+        exercises: 11,
+        id: 4
       }
     ]
-  }
+  },
+  {
+      name: 'Node.js',
+      id: 2,
+      parts: [
+        {
+          name: 'Routing',
+          exercises: 3,
+          id: 1
+        },
+        {
+          name: 'Middlewares',
+          exercises: 7,
+          id: 2
+        }
+      ]
+    }  
+]
 
-  return <Course course={course} />
+  return (
+  <div>
+    <Course courses={courses} />
+
+  </div> 
+  )
 }
 
 export default App
