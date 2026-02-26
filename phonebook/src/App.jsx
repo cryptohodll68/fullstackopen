@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import personService from './services/persons'
 
-  const SearchFilter = ({value, onChange}) => {
+const SearchFilter = ({value, onChange}) => {
     return(
       <>
       <h2>Filter by name</h2>
@@ -17,7 +18,7 @@ import { useState } from 'react'
         
       <form onSubmit={props.onSubmit}>
         <div>
-          name: <input value = {props.valueName} onChange={props.onChangeName} />
+          name: <input value = {props.nameProps.value} onChange={props.nameProps.onChange} />
           number: <input value = {props.valueNumber} onChange={props.onChangeNumber}></input>
         </div>
         <div>
@@ -28,31 +29,35 @@ import { useState } from 'react'
       )
     }
 
-    const Numbers = ({filteredName}) => {
+    const Numbers = ({filteredName, handleDelete}) => {
       return (
       <>
       <h2>Numbers</h2>
       <ul>
-        {filteredName.map( person => <li key={person.id}>{person.name}:  {person.number}</li>)}
+        {filteredName.map( person => {
+        return(
+        <li key={person.id}>{person.name}:  {person.number} <button onClick={() => handleDelete(person.id, person.name)}> Delete</button></li>  
+        
+          )}
+        )}
       </ul>
       </>
       )
     }
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456', id: 1 },
-    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
-    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
-    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
-  ]) 
-
-
-
+  
+  const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
-  
+  console.log(persons)
+  useEffect(() => {
+    personService.getAll()
+      .then(response => setPersons(response))
+  },
+    []    
+  )
 
   const handleNewName = (event) => {
     const name = event.target.value
@@ -66,31 +71,57 @@ const App = () => {
   
   const handleFilter = (event) => {
     const filter = event.target.value
-    console.log('names', filteredName);
+    
     setFilter(filter)
   }
  
   const addName = (event) => {
     event.preventDefault()
+    const existingPerson = persons.find(person => person.name === newName)
+    if(existingPerson){
+      
+      const confirm = window.confirm(
+        `${newName} already exist. Update number?`
+      )
+      if(!confirm) return
+       
+      const updatedPerson = {
+        ...existingPerson,
+        number: newNumber
+      }
+     
+      personService.update(existingPerson.id, updatedPerson)
+        .then(response => {
+          setPersons(prev => prev.map(person => person.id === existingPerson.id ? response : person))
 
-    const duplicateChecker = persons.some(person => person.name === newName)
-    if(duplicateChecker){
-     alert(`${newName} already exist, type a new name`)
-    } else {
+        })
+    
+        return
+    }
+
+   
       const objName = {
          name: newName,
          number: newNumber,
-         id: toString(persons.length + 1)
+        
     }
     
-    const updatedList = persons.concat(objName)
+    personService.create(objName)
+      .then(response => setPersons(persons.concat(response)))
     
-    setPersons(updatedList)
-    }
     
    
   }
-  
+
+  const handleDelete = (id, name) => {
+    const confirmed = window.confirm(`Are you sure you want to delete ${name}`)
+
+    if(confirmed) {
+      personService.remove(id)
+        .then(response => setPersons(persons.filter(person => person.id !== response.id)))
+        }
+  }
+    
    const filteredName = filter.trim()
         ? persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))
         : persons
@@ -101,11 +132,16 @@ const App = () => {
   return (
     <div>
       <SearchFilter value = {filter} onChange = {handleFilter}></SearchFilter>
-      <Phonebook onSubmit={addName} valueName={newName} valueNumber={newNumber} onChangeName={handleNewName} onChangeNumber={handleNewNumber}></Phonebook>
-      <Numbers filteredName={filteredName}></Numbers>
+      <Phonebook onSubmit={addName} nameProps={{value: newName, onChange: handleNewName}} valueNumber={newNumber} onChangeNumber={handleNewNumber}></Phonebook>
+      <Numbers filteredName={filteredName} handleDelete={handleDelete}></Numbers>
       
     </div>
   )
 }
 
 export default App
+
+
+
+ /*const duplicateChecker = )
+     else {}*/
