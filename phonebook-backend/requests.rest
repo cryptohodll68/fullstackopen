@@ -10,6 +10,3 @@ Content-Type: application/json
 
 ###
 
-  if(notes.find(n => n.name === body.name)) {
-    res.status(404).json({erro: 'name arleady exist'})
-  }
