@@ -1,6 +1,16 @@
 import { useState, useEffect } from 'react'
 import personService from './services/persons'
 
+const Notification = ({message}) => {
+  if(message === null) return null
+
+  return(
+    <div className='message'>
+      {message}
+    </div>
+  )
+}
+
 const SearchFilter = ({value, onChange}) => {
     return(
       <>
@@ -51,7 +61,8 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
-  console.log(persons)
+  const [message, setMessage] = useState('Ahiaaaaa')
+  
   useEffect(() => {
     personService.getAll()
       .then(response => setPersons(response))
@@ -91,13 +102,21 @@ const App = () => {
       }
      
       personService.update(existingPerson.id, updatedPerson)
-        .then(response => {
+        .then(response => { 
           setPersons(prev => prev.map(person => person.id === existingPerson.id ? response : person))
-
+          return response
         })
-    
+          .then(response => {
+            setMessage(`${response.name}'s number was updated`)
+            setTimeout( () => setMessage(null), 5000)
+          }
+        
+        )
         return
-    }
+        }
+    
+        
+    
 
    
       const objName = {
@@ -107,7 +126,14 @@ const App = () => {
     }
     
     personService.create(objName)
-      .then(response => setPersons(persons.concat(response)))
+      .then(response => {
+        setPersons(persons.concat(response))
+        return response
+      })
+      .then(response => {
+        setMessage(`${response.name} was added to the list`)
+        setTimeout( () => setMessage(null), 5000)
+      })
     
     
    
@@ -118,7 +144,16 @@ const App = () => {
 
     if(confirmed) {
       personService.remove(id)
-        .then(response => setPersons(persons.filter(person => person.id !== response.id)))
+        .then(response => {
+          setPersons(persons.filter(person => person.id !== response.id))
+          return response
+        })
+        .catch(error => {
+           setPersons(prev => prev.filter(person => person.id !== id))
+           setMessage(`This person was already deleted`)
+           setTimeout(() => setMessage(null), 5000)
+
+        })
         }
   }
     
@@ -132,6 +167,7 @@ const App = () => {
   return (
     <div>
       <SearchFilter value = {filter} onChange = {handleFilter}></SearchFilter>
+      <Notification message= {message}></Notification>
       <Phonebook onSubmit={addName} nameProps={{value: newName, onChange: handleNewName}} valueNumber={newNumber} onChangeNumber={handleNewNumber}></Phonebook>
       <Numbers filteredName={filteredName} handleDelete={handleDelete}></Numbers>
       

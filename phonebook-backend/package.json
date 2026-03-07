@@ -1,0 +1,24 @@
+{
+  "name": "phonebook-backend",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/cryptohodll68/fullstackopen#readme",
+  "bugs": {
+    "url": "https://github.com/cryptohodll68/fullstackopen/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cryptohodll68/fullstackopen.git"
+  },
+  "license": "ISC",
+  "author": "me",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "server": "node --watch index.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
