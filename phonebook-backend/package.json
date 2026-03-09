@@ -17,7 +17,9 @@
   "scripts": {
     "start": "node index.js",
     "test": "test",
-    "server": "node --watch index.js"
+    "server": "node --watch index.js",
+    "build:ui": "rm -rf dist && cd ../phonebook && npm run build && cp -r dist ../phonebook-backend",
+    "deploy:full": "npm run build:ui && git add . && git commit -m buildato && git push"
   },
   "dependencies": {
     "cors": "^2.8.6",
