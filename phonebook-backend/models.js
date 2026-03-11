@@ -10,6 +10,7 @@ mongoose.connect(url, {family : 4})
 const numberValidator  = (val) => {
   return /\d{2,3}-\d{5,}/.test(val)
 }
+
 const validator = [ numberValidator, '{VALUE} is not valid correct format 12(3)-45678']
 const personSchema = mongoose.Schema({
   name: {
