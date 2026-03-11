@@ -1,12 +1,19 @@
-DELETE http://localhost:3001/api/notes/2
+DELETE http://localhost:3001/api/notes/69b1f0900149ee62906643cc
 ###
 POST http://localhost:3001/api/notes/ HTTP/1.1
 Content-Type: application/json
 
 {
-  "name": "Smigol",
-  "number": "33333"
-}
+    "_id": "69b19ad0da4221a4ca776043",
+    "name": "Artor Hellas",
+    "number": "040-12",
+    "__v": 0
+  }
 
 ###
+
+GET http://localhost:3001/api/notes/69b19ad0da4221a4ca776043
+
+####
+GET http://localhost:3001/api/notes/
 
