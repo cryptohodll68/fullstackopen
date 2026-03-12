@@ -19,12 +19,19 @@
     "test": "test",
     "server": "node --watch index.js",
     "build:ui": "rm -rf dist && cd ../phonebook && npm run build && cp -r dist ../phonebook-backend",
-    "deploy:full": "npm run build:ui && git add . && git commit -m buildato && git push"
+    "deploy:full": "npm run build:ui && git add . && git commit -m buildato && git push",
+    "lint": "eslint ."
   },
   "dependencies": {
     "cors": "^2.8.6",
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "mongoose": "^9.3.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "eslint": "^10.0.3",
+    "globals": "^17.4.0"
   }
 }

@@ -32,16 +32,16 @@ app.get('/api/notes', (req, res, next) => {
   Person.find({}).then(persons => {
     res.json(persons)
   })
-  .catch(error => next(error))
+    .catch(error => next(error))
  
 })
 
 app.get('/api/notes/:id', (req, res, next) => {
-  const id = req.params.id
+
   Person.findById(req.params.id).then( person =>
     res.json(person)
   )
-  .catch(error => next(error))
+    .catch(error => next(error))
 })
 
 app.get('/info', (req, res, next) => {
@@ -51,7 +51,7 @@ app.get('/info', (req, res, next) => {
     const entries = persons.length
     res.send(`Phonebook has info for ${entries} people <br> ${time}`)
   })
-  .catch(error => next(error))
+    .catch(error => next(error))
   
 })
 
@@ -64,30 +64,30 @@ app.post('/api/notes', (req, res, next) => {
 
   Person.findOne({name: body.name}).then(existing => {
     if(existing) {
-       existing.number = body.number
-       return existing.save().then(updated => {
-       res.json(updated)
+      existing.number = body.number
+      return existing.save().then(updated => {
+        res.json(updated)
       })
     }
  
 
 
-  const person = new Person ({
-    name: body.name,
-    number: body.number,
-  })
+    const person = new Person ({
+      name: body.name,
+      number: body.number,
+    })
 
- return person.save()
+    return person.save()
  
- })
- .then(savedperson => {
-  if(savedperson) {res.json(savedperson)}})
+  })
+    .then(savedperson => {
+      if(savedperson) {res.json(savedperson)}})
     .catch(error => next(error))
 
 })
 
 app.put('/api/notes/:id', (req, res, next) => {
-const { name, number} = req.body
+  const { name, number} = req.body
 
   Person.findById(req.params.id)
     .then(person => {
@@ -106,11 +106,11 @@ const { name, number} = req.body
 })
 
 app.delete('/api/notes/:id', (req, res, next) => {
-  const id = req.params.id
+  
   Person.findByIdAndDelete(req.params.id).then( deleted => {
     return res.json(deleted).end()
   })
-  .catch(error => next(error))
+    .catch(error => next(error))
 
 })
 
