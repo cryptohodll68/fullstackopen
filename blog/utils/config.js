@@ -1,4 +1,10 @@
-const URI = `mongodb+srv://user:fullstacklearn@noob.xi6zl6z.mongodb.net/?appName=Noob`
-const PORT = 3001
+require('dotenv').config()
 
-module.exports = {URI, PORT}
+const SECRET = process.env.SECRET
+const URI = process.env.NODE_ENV === 'test' 
+  ? process.env.TEST_URI
+  : process.env.URI
+  
+const PORT = process.env.PORT
+
+module.exports = {URI, PORT, SECRET}
