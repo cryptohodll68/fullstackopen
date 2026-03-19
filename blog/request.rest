@@ -1,0 +1,17 @@
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+
+{
+  "title": "Sino",
+  "author": "Lungo",
+  "url": "http://spoppo",
+  "likes": 5
+}
+
+###
+
+GET http://localhost:3001/api/blogs
+
+###
+
+GET http://localhost:3001/api/blogs/69b3e73acdbf3adb958341c5

@@ -12,19 +12,19 @@ const Notification = ({message}) => {
 }
 
 const SearchFilter = ({value, onChange}) => {
-    return(
-      <>
+  return(
+    <>
       <h2>Filter by name</h2>
       <input value = {value} onChange={onChange}/>
-      </>
-    )
+    </>
+  )
 
-  }
+}
 
-  const Phonebook = (props) => {
-      return (
-        <>
-        <h2>Phonebook</h2>
+const Phonebook = (props) => {
+  return (
+    <>
+      <h2>Phonebook</h2>
         
       <form onSubmit={props.onSubmit}>
         <div>
@@ -35,25 +35,25 @@ const SearchFilter = ({value, onChange}) => {
           <button type="submit">add</button>
         </div>
       </form>
-      </>
-      )
-    }
+    </>
+  )
+}
 
-    const Numbers = ({filteredName, handleDelete}) => {
-      return (
-      <>
+const Numbers = ({filteredName, handleDelete}) => {
+  return (
+    <>
       <h2>Numbers</h2>
       <ul>
         {filteredName.map( person => {
-        return(
-        <li key={person.id}>{person.name}:  {person.number} <button onClick={() => handleDelete(person.id, person.name)}> Delete</button></li>  
+          return(
+            <li key={person.id}>{person.name}:  {person.number} <button onClick={() => handleDelete(person.id, person.name)}> Delete</button></li>  
         
           )}
         )}
       </ul>
-      </>
-      )
-    }
+    </>
+  )
+}
 
 const App = () => {
   
@@ -67,15 +67,15 @@ const App = () => {
     personService.getAll()
       .then(response => setPersons(response))
   },
-    []    
+  []    
   )
-
+  console.log('cazzz', persons)
   const handleNewName = (event) => {
     const name = event.target.value
     setNewName(name)
   }
 
-   const handleNewNumber = (event) => {
+  const handleNewNumber = (event) => {
     const number = event.target.value
     setNewNumber(number)
   }
@@ -106,22 +106,22 @@ const App = () => {
           setPersons(prev => prev.map(person => person.id === existingPerson.id ? response : person))
           return response
         })
-          .then(response => {
-            setMessage(`${response.name}'s number was updated`)
-            setTimeout( () => setMessage(null), 5000)
-          }
+        .then(response => {
+          setMessage(`${response.name}'s number was updated`)
+          setTimeout( () => setMessage(null), 5000)
+        }
         
         )
-        return
-        }
+      return
+    }
     
         
     
 
    
-      const objName = {
-         name: newName,
-         number: newNumber,
+    const objName = {
+      name: newName,
+      number: newNumber,
         
     }
     
@@ -141,25 +141,26 @@ const App = () => {
 
   const handleDelete = (id, name) => {
     const confirmed = window.confirm(`Are you sure you want to delete ${name}`)
-
+    console.log(id)
     if(confirmed) {
       personService.remove(id)
         .then(response => {
           setPersons(persons.filter(person => person.id !== response.id))
+          console.log(response)
           return response
         })
         .catch(error => {
-           setPersons(prev => prev.filter(person => person.id !== id))
-           setMessage(`This person was already deleted`)
-           setTimeout(() => setMessage(null), 5000)
+          setPersons(prev => prev.filter(person => person.id !== id))
+          setMessage('This person was already deleted')
+          setTimeout(() => setMessage(null), 5000)
 
         })
-        }
+    }
   }
     
-   const filteredName = filter.trim()
-        ? persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))
-        : persons
+  const filteredName = filter.trim()
+    ? persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))
+    : persons
 
 
   
@@ -177,7 +178,3 @@ const App = () => {
 
 export default App
 
-
-
- /*const duplicateChecker = )
-     else {}*/
