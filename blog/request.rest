@@ -1,17 +1,47 @@
-POST http://localhost:3001/api/blogs
-Content-Type: application/json
-
-{
-  "title": "Sino",
-  "author": "Lungo",
-  "url": "http://spoppo",
-  "likes": 5
-}
-
-###
-
 GET http://localhost:3001/api/blogs
 
 ###
 
 GET http://localhost:3001/api/blogs/69b3e73acdbf3adb958341c5
+
+
+###
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImZvbyIsImlkIjoiNjljNmIwZDU4Yjg4OWJjNTE2N2Q2OGE0IiwiaWF0IjoxNzc0NzE0NDEwfQ.G7QoUMGko7U1QvOf9u4RP7WcYoNMZRB32JNMQAXpfcE
+
+{
+  "title":"TEST4",
+  "author":"Foo",
+  "url":"https://hfndfkff.com/id?3434",
+  "likes":"12"
+}
+
+###
+DELETE http://localhost:3001/api/blogs/69ca83b0beca988e372f3792
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImZvbyIsImlkIjoiNjljNmIwZDU4Yjg4OWJjNTE2N2Q2OGE0IiwiaWF0IjoxNzc0NzE0NDEwfQ.G7QoUMGko7U1QvOf9u4RP7WcYoNMZRB32JNMQAXpfcE
+
+###
+GET http://localhost:3001/api/users
+
+###
+DELETE http://localhost:3001/api/users
+
+###
+POST http://localhost:3001/api/users
+Content-Type: application/json
+
+{
+  "_id": "5a422b3a1b54a676234d17f9",  
+  "username": "soo",
+  "name": "all",
+  "password": "73894hf"
+}
+###
+POST http://localhost:3001/login
+Content-Type: application/json
+
+{
+  "username": "foo",
+  "password": "73894hf"
+}

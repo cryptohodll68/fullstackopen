@@ -47,7 +47,7 @@ const mostLikes = (blogs) => {
     }
     
   })
-  console.log(counts)
+  
 
   const max = Math.max(...Object.values(counts))
   const target = Object.keys(counts).find(key => counts[key] === max)
